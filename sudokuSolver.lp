@@ -1,8 +1,3 @@
-% By: Atreya Shankar (799227)
-% Email: shankar@uni-potsdam.de
-
-subgrid_size(3).
-
 % define generic parameters
 x(1..9).
 y(1..9).
