@@ -9,7 +9,7 @@ This repository contains a sudoku solver algorithm implemented in clingo (https:
 2. Clone this repository and navigate into its main directory:
 
    ```shell
-   git clone https://github.com/AtreyaSh/sudokuSolver && cd sudokuSolver
+   $ git clone https://github.com/AtreyaSh/sudokuSolver && cd sudokuSolver
    ```
 
 3. The file `initial.lp` should contain input instances of the sudoku puzzle. These should be written in the form `initial(X,Y,V)`, where X and Y are x and y-coordinates and V represents the value of a cell; all with ranges of `[1,9]`. You can input your initial instances directly into `initial.lp`.
