@@ -1,8 +1,6 @@
 % define generic parameters
-x(1..9).
-y(1..9).
-v(1..9).
 grid(1..9,1..9).
+v(1..9).
 
 % define variables
 initial(X,Y,(((X-1)/3)*3 + (Y-1)/3),V) :- initial(X,Y,V).
