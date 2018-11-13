@@ -23,3 +23,5 @@ This repository contains a sudoku solver algorithm implemented in clingo (https:
 ## Vim configuration for clingo
 
 In order to get syntax highlighting for clingo/gringo in vim, simply copy the 3 folders inside the local `vim/` directory into your `~/.vim` directory.
+
+Source and further information: https://sourceforge.net/p/potassco/code/HEAD/tree/trunk/vim-syntax-gringo/
