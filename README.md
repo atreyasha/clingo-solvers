@@ -19,3 +19,7 @@ This repository contains a sudoku solver algorithm implemented in clingo (https:
    ```shell
    $ clingo-5.3.0 initial.lp sudokuSolver.lp 0
    ```
+
+## Vim configuration for clingo
+
+In order to get syntax highlighting for clingo/gringo in vim, simply copy the 3 folders inside the local `vim/` directory into your `~/.vim` directory.
