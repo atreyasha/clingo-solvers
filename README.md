@@ -9,7 +9,7 @@ This repository contains NxN-Sudoku and Yosenabe game solvers implemented in cli
 2. Clone this repository and navigate into its main directory:
 
    ```shell
-   $ git clone https://github.com/AtreyaSh/sudokuSolver && cd sudokuSolver
+   $ git clone https://github.com/AtreyaSh/clingoSolvers && cd clingoSolvers
    ```
 
 3. The directory `/initial` contains test instances of the games. You can test the the default 9x9 sudoku solver (for example) as shown below:
