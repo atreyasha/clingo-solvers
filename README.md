@@ -1,4 +1,4 @@
-# Game solvers implemented in clin-o
+# Game solvers implemented in clingo
 
 This repository contains 9x9-Sudoku and Yosenabe game solvers implemented in clingo (https://github.com/potassco/clingo).
 
