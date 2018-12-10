@@ -21,7 +21,6 @@ gridR(X,Y,(((X-1)/n)*n + (Y-1)/n)) :- gridR(X,Y).
 :-#sum{1,Y,V:sudoku(X,Y,S,V)} != n*n, Y=(1..n*n).
 :-#sum{1,S,V:sudoku(X,Y,S,V)} != n*n, S=(0..n*n-1).
 
-% redefine for presentation
+% project and print
 sudoku(X,Y,V) :- sudoku(X,Y,S,V).
-
 #show sudoku/3.
