@@ -1,6 +1,6 @@
 # Sudoku solver for 9x9 grid
 
-This repository contains a sudoku solver algorithm implemented in clingo (https://github.com/potassco/clingo).
+This repository contains Sudoku and Yosenabe game solvers implemented in clingo (https://github.com/potassco/clingo).
 
 ## Guide for implementation
 
@@ -12,12 +12,10 @@ This repository contains a sudoku solver algorithm implemented in clingo (https:
    $ git clone https://github.com/AtreyaSh/sudokuSolver && cd sudokuSolver
    ```
 
-3. The file `initial.lp` should contain input instances of the sudoku puzzle. These should be written in the form `initial(X,Y,V)`, where X and Y are x and y-coordinates and V represents the value of a cell; all with ranges of `[1,9]`. You can input your initial instances directly into `initial.lp`.
-
-4. Run the sudoku solver:
+3. The directory `/initial` contains test instances of the games. You can test the the sudoku solver (for example) as shown below:
 
    ```shell
-   $ clingo-5.3.0 initial.lp sudokuSolver.lp 0
+   $ clingo-5.3.0 ./initial/initialSudoku.lp sudokuSolver.lp 0
    ```
 
 ## Vim configuration for clingo
