@@ -1,6 +1,6 @@
-# Sudoku solver for 9x9 grid
+# Game solvers implemented in clin-o
 
-This repository contains Sudoku and Yosenabe game solvers implemented in clingo (https://github.com/potassco/clingo).
+This repository contains 9x9-Sudoku and Yosenabe game solvers implemented in clingo (https://github.com/potassco/clingo).
 
 ## Guide for implementation
 
