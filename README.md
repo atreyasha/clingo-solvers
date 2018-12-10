@@ -1,6 +1,6 @@
 # Game solvers implemented in clingo
 
-This repository contains 9x9-Sudoku and Yosenabe game solvers implemented in clingo (https://github.com/potassco/clingo).
+This repository contains NxN-Sudoku and Yosenabe game solvers implemented in clingo (https://github.com/potassco/clingo).
 
 ## Guide for implementation
 
@@ -12,7 +12,7 @@ This repository contains 9x9-Sudoku and Yosenabe game solvers implemented in cli
    $ git clone https://github.com/AtreyaSh/sudokuSolver && cd sudokuSolver
    ```
 
-3. The directory `/initial` contains test instances of the games. You can test the the sudoku solver (for example) as shown below:
+3. The directory `/initial` contains test instances of the games. You can test the the default 9x9 sudoku solver (for example) as shown below:
 
    ```shell
    $ clingo-5.3.0 ./initial/initialSudoku.lp sudokuSolver.lp 0
