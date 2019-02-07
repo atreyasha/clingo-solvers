@@ -26,7 +26,7 @@ action(t-1,3) :- mmino(X,Y,t-1), aat(XX,YY,t), Y-YY > 0, not action(t-1,1), not 
 action(t-1,4) :- mmino(X,Y,t-1), aat(XX,YY,t), Y-YY < 0, not action(t-1,1), not action(t-1,2) , move(X',Y',4,_), not wall(X,Y,X+X',Y+Y'), not wall(X+X',Y+Y',X,Y), field(X+X',Y+Y').
 action(t-1,5) :- mmino(X,Y,t-1), aat(XX,YY,t), move(X',Y',5,_), not action(t-1,1), not action(t-1,2), not action(t-1,3), not action(t-1,4).
 
-% create possible movement space for mino based on free will and wall
+% generate deterministic movement for mino
 {mmino(X+X',Y+Y',t): move(X',Y',V,_), action(t-1,V)} = 1 :- mmino(X,Y,t-1).
 
 % remove bad cases
