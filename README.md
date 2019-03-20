@@ -1,6 +1,6 @@
 # Game solvers implemented in clingo
 
-This repository contains NxN-Sudoku, Yosenabe and Minotaur game solvers implemented in clingo (https://github.com/potassco/clingo).
+This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in clingo (https://github.com/potassco/clingo).
 
 ## Guide for implementation
 
