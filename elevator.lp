@@ -1,6 +1,3 @@
-% Atreya Shankar
-% shankar@uni-potsdam.de
-
 #include <incmode>.
 
 #program base.
@@ -58,8 +55,3 @@ holds(request(deliver(X),Y),t) :- not holds(at(elevator(X),Y),t-1), holds(reques
 
 % print
 #show holds(X,t) : holds(X,t).
-
-% comments:
-% slow solution due to too many choice rule sets
-% try to process slow cases step by step to check for bottleneck
-% improve constratints on logical movements to reduce model expansion
