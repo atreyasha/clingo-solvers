@@ -1,27 +1,61 @@
 #include <incmode>.
 
 #program base.
-holds(at(elevator(X),Y),0) :- init(at(elevator(X),Y)).
-holds(request(deliver(X),Y),0) :- init(request(deliver(X),Y)).
-holds(request(call(X),Y),0) :- init(request(call(X),Y)).
+% initialize and create targets
+move(1).
+move(-1).
+holds(A,0) :- init(A).
+targets(elevator(X),Y') :- holds(at(elevator(X),Y),0), holds(request(deliver(X),Y'),0).
+{targets(elevator(X),Y'): holds(at(elevator(X),_),0)} :- holds(request(call(_),Y'),0), not holds(request(deliver(_),Y'),0).
+
+% constraints to ensure all tasks are targetted, and no double tasking
+:- targets(elevator(X),Y),targets(elevator(X'),Y), X' != X, holds(request(call(_),Y),0), not holds(request(deliver(_),Y),0).
+:- holds(request(_,Y),0), not targets(_,Y).
+
+% action if one target exists for elevator
+number(elevator(X),N) :- N = #sum{1,X,Y:targets(elevator(X),Y)}, holds(at(elevator(X),_),0).
+target1(elevator(X),Y) :- targets(elevator(X),Y), N = 1, number(elevator(X),N).
+target2(elevator(X),Y) :- target1(elevator(X),Y), N = 1, number(elevator(X),N).
+
+% distribution parameter
+param(elevator(X),M,N) :- holds(at(elevator(X),_),0), M = #max{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, N = #min{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, L > 1, number(elevator(X),L).
+
+% action if multiple target distances exist, elevator inside range
+target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y+N, not target2(elevator(X), Q), L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
+
+target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y-N, not target2(elevator(X), Q), L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
+
+target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y+N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
+
+target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y-N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
+
+% action if multiple target distances exist, elevator outside range
+target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y+N, not target2(elevator(X), Q), L > 1, number(elevator(X),L).
+
+target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y-N, not target2(elevator(X), Q), L > 1, number(elevator(X),L).
+
+target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y+N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
+
+target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y-N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
+
+% ensure only one target 1 and 2 exist
+:- target1(elevator(X),_), not target2(elevator(X),_).
+:- target2(elevator(X),_), not target1(elevator(X),_).
+:- target1(elevator(X),Y), target1(elevator(X),Y'), Y!=Y'.
+:- target2(elevator(X),Y), target2(elevator(X),Y'), Y!=Y'.
 
 #program step(t).
-% create presence scene for movement
-presenceD(elevator(X),-1,t-1) :- holds(at(elevator(X),Y),t-1), holds(request(deliver(X),Y'),t-1), Y'-Y < 0.
-presenceD(elevator(X),1,t-1) :- holds(at(elevator(X),Y),t-1), holds(request(deliver(X),Y'),t-1), Y'-Y > 0.
-presenceC(elevator(X),-1,t-1) :- holds(at(elevator(X),Y),t-1), holds(request(call(_),Y'),t-1), not holds(request(deliver(_),Y'),t), Y'-Y < 0.
-presenceC(elevator(X),1,t-1) :- holds(at(elevator(X),Y),t-1), holds(request(call(_),Y'),t-1),  not holds(request(deliver(_),Y'),t), Y'-Y > 0.
+do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target1(elevator(X),Y'), holds(request(deliver(X),Y'),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
 
-% moving for delivery
-{do(elevator(X),move(V),t): holds(at(elevator(X),Y),t-1), presenceD(elevator(X),V,t-1), not do(elevator(X),serve,t)}.
+do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target1(elevator(X),Y'), holds(request(call(_),Y'),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
 
-% moving for request
-{do(elevator(X),move(V),t): holds(at(elevator(X),Y),t-1), presenceC(elevator(X),V,t-1), not do(elevator(X),serve,t)}.
+do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target2(elevator(X),Y'), holds(request(deliver(X),Y'),t), target1(elevator(X),Y''), not holds(request(deliver(X),Y''),t), not holds(request(call(_),Y''),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
+
+do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target2(elevator(X),Y'), holds(request(call(_),Y'),t), target1(elevator(X),Y''), not holds(request(deliver(X),Y''),t), not holds(request(call(_),Y''),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
 
 % serving task
-do(elevator(X),serve,t) :- holds(request(deliver(X),Y),t-1), holds(at(elevator(X),Y),t-1).
-{do(elevator(X),serve,t): holds(request(call(_),Y),t-1), holds(at(elevator(X),Y),t-1), not deliveryServe(Y,t),not holds(request(deliver(_),Y),t-1)}.
-deliveryServe(Y,t) :- holds(request(deliver(X),Y),t-1), holds(at(elevator(X),Y),t-1).
+do(elevator(X),serve,t) :- holds(request(deliver(X),Y),t-1), holds(at(elevator(X),Y),t-1), targets(elevator(X),Y).
+do(elevator(X),serve,t) :- holds(request(call(_),Y),t-1), holds(at(elevator(X),Y),t-1), targets(elevator(X),Y).
 serving(Y,t) :- do(elevator(X),serve,t), holds(at(elevator(X),Y),t-1).
 
 % transferring tasks and positions
@@ -31,15 +65,8 @@ holds(at(elevator(X),Y),t) :- holds(at(elevator(X),Y),t-1), not do(elevator(X),_
 holds(request(call(V),Y),t) :- not serving(Y,t), holds(request(call(V),Y),t-1).
 holds(request(deliver(X),Y),t) :- not holds(at(elevator(X),Y),t-1), holds(request(deliver(X),Y),t-1).
 
-% constraint: ensure only one move per elevator per time step
-:- do(elevator(X),A,t), do(elevator(X),A',t), A != A'.
-
-% constraints: ensure logical movements
-:- do(elevator(X),move(V),t-1), do(elevator(X),move(V'),t), V*V'=-1, t > 1.
-:- do(elevator(X),move(V),t-2), holds(at(elevator(X),Y),t-2), do(elevator(X),serve,t-1), do(elevator(X), move(V'),t), holds(at(elevator(X),Y''),t), holds(request(deliver(X),Y'),t), V*V'=-1, |Y'-Y| < |Y'-Y''|, t > 3.
-
 % optimize for moves
-#minimize{1,X,V,T:do(elevator(X),move(V),T)}.
+#minimize{1,X,T:do(elevator(X),move(_),T)}.
 
 % print
 #show do(A,X,t) : do(A,X,t).
