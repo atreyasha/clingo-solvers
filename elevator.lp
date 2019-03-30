@@ -13,7 +13,7 @@ targets(elevator(X),Y') :- holds(at(elevator(X),Y),0), holds(request(deliver(X),
 :- holds(request(_,Y),0), not targets(_,Y).
 
 % action if one target exists for elevator
-number(elevator(X),N) :- N = #sum{1,X,Y:targets(elevator(X),Y)}, holds(at(elevator(X),_),0).
+number(elevator(X),N) :- N = #sum{1,Y:targets(elevator(X),Y)}, holds(at(elevator(X),_),0).
 target1(elevator(X),Y) :- targets(elevator(X),Y), N = 1, number(elevator(X),N).
 target2(elevator(X),Y) :- target1(elevator(X),Y), N = 1, number(elevator(X),N).
 
