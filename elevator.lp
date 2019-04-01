@@ -9,21 +9,23 @@ targets(elevator(X),Y') :- holds(at(elevator(X),Y),0), holds(request(deliver(X),
 :- targets(elevator(X),Y), targets(elevator(X'),Y), X' != X, holds(request(call(_),Y),0), not holds(request(deliver(_),Y),0).
 :- holds(request(_,Y),0), not targets(_,Y).
 
-% action if one target exists for elevator
+% calculate number of tasks per elevator
 number(elevator(X),N) :- N = #sum{1,Y:targets(elevator(X),Y)}, holds(at(elevator(X),_),0).
+
+% action if only one target exists for elevator
 target1(elevator(X),Y) :- targets(elevator(X),Y), N = 1, number(elevator(X),N).
 target2(elevator(X),Y) :- target1(elevator(X),Y), N = 1, number(elevator(X),N).
 
-% distribution parameter
+% distribution parameter for elevator vs. requests
 param(elevator(X),M,N) :- holds(at(elevator(X),_),0), M = #max{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, N = #min{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, L > 1, number(elevator(X),L).
 
-% action if multiple target distances exist, elevator inside range
+% action if multiple target distances exist, elevator inside request range
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y+N, not target2(elevator(X), Q), L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y-N, not target2(elevator(X), Q), L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
 target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y+N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
 target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y-N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
 
-% action if multiple target distances exist, elevator outside range
+% action if multiple target distances exist, elevator outside request range
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y+N, L > 1, number(elevator(X),L).
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y-N, L > 1, number(elevator(X),L).
 target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y+N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
@@ -35,7 +37,7 @@ target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N 
 :- target1(elevator(X),Y), target1(elevator(X),Y'), Y!=Y'.
 :- target2(elevator(X),Y), target2(elevator(X),Y'), Y!=Y'.
 
-% calculate per elevator and cumulative moves (deterministic)
+% calculate per-elevator and cumulative moves (deterministic)
 moves(elevator(X),N) :- N = #sum{|Y-Y'|;|Y'-Y''|}, holds(at(elevator(X),Y),0), target1(elevator(X),Y'), target2(elevator(X),Y'').
 allmoves(N) :- N = #sum{M:moves(elevator(_),M)}.
 
