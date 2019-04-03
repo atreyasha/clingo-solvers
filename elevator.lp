@@ -12,20 +12,20 @@ targets(elevator(X),Y') :- holds(at(elevator(X),Y),0), holds(request(deliver(X),
 % calculate number of tasks per elevator
 number(elevator(X),N) :- N = #sum{1,Y:targets(elevator(X),Y)}, holds(at(elevator(X),_),0).
 
-% action if only one target exists for elevator
+% distribution parameter for elevator vs. requests, given multiple targets
+param(elevator(X),M,N) :- holds(at(elevator(X),_),0), M = #max{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, N = #min{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, L > 1, number(elevator(X),L).
+
+% action if only one target exists
 target1(elevator(X),Y) :- targets(elevator(X),Y), N = 1, number(elevator(X),N).
 target2(elevator(X),Y) :- target1(elevator(X),Y), N = 1, number(elevator(X),N).
 
-% distribution parameter for elevator vs. requests
-param(elevator(X),M,N) :- holds(at(elevator(X),_),0), M = #max{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, N = #min{Y-Y':holds(at(elevator(X),Y),0), targets(elevator(X),Y')}, L > 1, number(elevator(X),L).
-
-% action if multiple target distances exist, elevator inside request range
+% action if multiple targets exist, elevator inside target span
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y+N, not target2(elevator(X), Q), L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y-N, not target2(elevator(X), Q), L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
 target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y+N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
 target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K <= 0, Q = Y-N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'<Q.
 
-% action if multiple target distances exist, elevator outside request range
+% action if multiple targets exist, elevator outside target span
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y+N, L > 1, number(elevator(X),L).
 target1(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #min{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y-N, L > 1, number(elevator(X),L).
 target2(elevator(X),Q) :- holds(at(elevator(X),Y),0), targets(elevator(X),Q), N = #max{|M|;|K|}, param(elevator(X),M,K), M*K > 0, Q = Y+N, target1(elevator(X), Q''), Q''!= Q, L > 1, number(elevator(X),L), #false:targets(elevator(X),Q'), Q'>Q.
