@@ -48,6 +48,7 @@ allmoves(N) :- N = #sum{M:moves(elevator(_),M)}.
 % pass
 
 #program step(t).
+% moving elevators based on target1 and target2
 do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target1(elevator(X),Y'), holds(request(deliver(X),Y'),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
 do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target1(elevator(X),Y'), holds(request(call(_),Y'),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
 do(elevator(X),move(V),t) :- holds(at(elevator(X),Y),t-1), target2(elevator(X),Y'), holds(request(deliver(X),Y'),t), target1(elevator(X),Y''), not holds(request(deliver(X),Y''),t), not holds(request(call(_),Y''),t), move(V), |Y+V-Y'|<|Y-Y'|, not do(elevator(X),serve,t).
