@@ -9,7 +9,7 @@ This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solver
 2. Clone this repository and navigate into its main directory:
 
    ```shell
-   $ git clone https://github.com/AtreyaSh/clingoSolvers && cd clingoSolvers
+   $ git clone https://github.com/atreyasha/clingoSolvers && cd clingoSolvers
    ```
 
 3. The directory `/initial` contains test instances of the games. You can test the the default 9x9 sudoku solver (for example) as shown below:
