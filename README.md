@@ -15,7 +15,7 @@ This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solver
 3. The directory `/initial` contains test instances of the games. You can test the the default 9x9 sudoku solver (for example) as shown below:
 
    ```shell
-   $ clingo-5.3.0 ./initial/initialSudoku.lp sudoku.lp 0
+   $ clingo ./initial/initialSudoku.lp sudoku.lp 0
    ```
 
 ## Vim configuration for clingo
