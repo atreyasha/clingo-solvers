@@ -2,6 +2,8 @@
 
 This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in clingo (https://github.com/potassco/clingo).
 
+Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alt.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are very welcome.
+
 ## Guide for implementation
 
 1. Install clingo onto your system (https://github.com/potassco/clingo/blob/master/INSTALL.md).
