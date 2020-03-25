@@ -1,6 +1,6 @@
 # Game solvers implemented in clingo
 
-This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in clingo (https://github.com/potassco/clingo). The report for the final elevator project can be found [here](asp_elevator.pdf).
+This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in [clingo](https://github.com/potassco/clingo). The report for the final elevator project can be found [here](asp_elevator.pdf).
 
 **Note:** Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alt.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
 
