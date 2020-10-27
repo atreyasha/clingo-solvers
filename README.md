@@ -1,8 +1,6 @@
-# Game solvers implemented in clingo
+# Clingo-solvers
 
 This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in [clingo](https://github.com/potassco/clingo). The report for the final elevator project can be found [here](asp_elevator.pdf).
-
-**Note:** Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alt.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
 
 ## Guide for implementation
 
@@ -11,7 +9,7 @@ This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solver
 2. Clone this repository and navigate into its main directory:
 
    ```shell
-   $ git clone https://github.com/atreyasha/clingoSolvers && cd clingoSolvers
+   $ git clone https://github.com/atreyasha/clingo-solvers && cd clingo-solvers
    ```
 
 3. The directory `/initial` contains test instances of the games. You can test the the default 9x9 sudoku solver (for example) as shown below:
@@ -19,6 +17,10 @@ This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solver
    ```shell
    $ clingo ./initial/initialSudoku.lp sudoku.lp 0
    ```
+
+## Troubleshooting
+
+Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alt.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
 
 ## Vim configuration for clingo
 
