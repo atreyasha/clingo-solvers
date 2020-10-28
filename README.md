@@ -1,29 +1,27 @@
 # Clingo-solvers
 
-This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in [clingo](https://github.com/potassco/clingo). The report for the final elevator project can be found [here](asp_elevator.pdf).
+This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in [`clingo`](https://github.com/potassco/clingo). The report for the final elevator project can be found [here](./docs/asp_elevator.pdf).
 
-## Guide for implementation
+## Dependencies
 
-1. Install clingo onto your system (https://github.com/potassco/clingo/blob/master/INSTALL.md).
+Install `clingo` onto your system, either via your package manager (recommended, if available) or building from [source](https://github.com/potassco/clingo/blob/master/INSTALL.md).
 
-2. Clone this repository and navigate into its main directory:
+## Usage
 
-   ```shell
-   $ git clone https://github.com/atreyasha/clingo-solvers && cd clingo-solvers
-   ```
+Source code for `clingo` solvers are available in the `src` directory. The `init` directory contains test instances of the respective games.
 
-3. The directory `/initial` contains test instances of the games. You can test the the default 9x9 sudoku solver (for example) as shown below:
+To test the default 9x9 sudoku solver, execute the following:
 
-   ```shell
-   $ clingo ./initial/initialSudoku.lp sudoku.lp 0
-   ```
+```shell
+$ clingo ./init/init_sudoku.lp ./src/sudoku.lp 0
+```
 
 ## Troubleshooting
 
 Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alt.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
 
-## Vim configuration for clingo
+## Vim syntax-highlighting
 
-In order to get syntax highlighting for clingo/gringo in vim, simply copy the 3 folders inside the local `vim/` directory into your `~/.vim` directory.
+In order to initialize syntax highlighting for `clingo` in `vim`, simply copy the 3 folders inside this repository's `vim` directory into your local `~/.vim` directory.
 
 Source and further information: https://sourceforge.net/p/potassco/code/HEAD/tree/trunk/vim-syntax-gringo/
