@@ -16,7 +16,7 @@ As an example, one can test the default 9x9 sudoku solver by executing:
 $ clingo ./test/test_sudoku.lp ./src/sudoku.lp 0
 ```
 
-## Troubleshooting
+## Issues
 
 Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alternative.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
 
