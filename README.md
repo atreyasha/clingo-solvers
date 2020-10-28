@@ -18,7 +18,7 @@ $ clingo ./test/test_sudoku.lp ./src/sudoku.lp 0
 
 ## Issues
 
-Based on local experiments, all solvers except the Minotaur solver in `mino.lp` and/or `mino_alternative.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
+Based on local experiments, all solvers except the Minotaur solver in `minotaur.lp` and/or `minotaur_alternative.lp` succeeded in Yeti benchmark tests. Pull requests for an improved Minotaur solver are therefore very welcome.
 
 ## Vim syntax-highlighting
 
