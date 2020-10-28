@@ -8,12 +8,12 @@ Install `clingo` onto your system, either via your package manager (recommended,
 
 ## Usage
 
-Source code for `clingo` solvers are available in the `src` directory. The `init` directory contains test instances of the respective games.
+Source code for `clingo` solvers are available in the `src` directory. The `test` directory contains test instances of the respective games.
 
 As an example, one can test the default 9x9 sudoku solver by executing:
 
 ```shell
-$ clingo ./init/init_sudoku.lp ./src/sudoku.lp 0
+$ clingo ./test/test_sudoku.lp ./src/sudoku.lp 0
 ```
 
 ## Troubleshooting
