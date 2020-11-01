@@ -6,8 +6,6 @@ This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solver
 
 Install `clingo` onto your system, either via your package manager (recommended, if available) or building from [source](https://github.com/potassco/clingo/blob/master/INSTALL.md).
 
-For example, Arch Linux users can install `clingo` directly from the [AUR](https://aur.archlinux.org/packages/clingo).
-
 ## Usage
 
 Source code for `clingo` solvers is available in the `src` directory. The `test` directory contains test instances of the respective games.
