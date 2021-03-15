@@ -1,10 +1,10 @@
 # Clingo solvers
 
-This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in [`clingo`](https://github.com/potassco/clingo). The report for the final elevator project can be found [here](./docs/asp_elevator.pdf).
+This repository contains NxN-Sudoku, Yosenabe, Minotaur and Elevator game solvers implemented in [clingo](https://github.com/potassco/clingo). The report for the final elevator project can be found [here](./docs/asp_elevator.pdf).
 
 ## Dependencies
 
-Install `clingo` onto your system, either via your package manager (recommended, if available) or building from [source](https://github.com/potassco/clingo/blob/master/INSTALL.md).
+Install `clingo` onto your system, either via your package manager (recommended, if available) or [building from source](https://github.com/potassco/clingo/blob/master/INSTALL.md).
 
 The source code in this repository was tested against `v5.3.0` of `clingo`.
 
